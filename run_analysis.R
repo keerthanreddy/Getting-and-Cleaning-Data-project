@@ -1,5 +1,5 @@
 # Step1. Merges the training and the test sets to create one data set.
-# setwd("~/Desktop/Online Coursera/Coursera-Getting-and-Cleaning-Data/peer_assessment/")
+# setwd("C:/Users/keerthan/Desktop/coursera/Data cleaning/week 4/Assignment/UCI HAR Dataset")
 trainData <- read.table("./data/train/X_train.txt")
 dim(trainData) # 7352*561
 head(trainData)
@@ -69,6 +69,3 @@ for(i in 1:subjectLen) {
 }
 head(result)
 write.table(result, "data_with_means.txt") # write out the 2nd dataset
-
-# data <- read.table("./data_with_means.txt")
-# data[1:12, 1:3]
