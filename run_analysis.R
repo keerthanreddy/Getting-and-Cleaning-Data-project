@@ -1,29 +1,29 @@
 # Step1. Merges the training and the test sets to create one data set.
-# setwd("C:/Users/keerthan/Desktop/coursera/Data cleaning/week 4/Assignment/UCI HAR Dataset")
+setwd("C:/Users/keerthan/Desktop/coursera/Data cleaning/week 4/Assignment/UCI HAR Dataset")
 trainData <- read.table("./data/train/X_train.txt")
-dim(trainData) # 7352*561
+dim(trainData) 
 head(trainData)
 trainLabel <- read.table("./data/train/y_train.txt")
 table(trainLabel)
 trainSubject <- read.table("./data/train/subject_train.txt")
 testData <- read.table("./data/test/X_test.txt")
-dim(testData) # 2947*561
+dim(testData) 
 testLabel <- read.table("./data/test/y_test.txt") 
 table(testLabel) 
 testSubject <- read.table("./data/test/subject_test.txt")
 joinData <- rbind(trainData, testData)
-dim(joinData) # 10299*561
+dim(joinData)
 joinLabel <- rbind(trainLabel, testLabel)
-dim(joinLabel) # 10299*1
+dim(joinLabel) 
 joinSubject <- rbind(trainSubject, testSubject)
-dim(joinSubject) # 10299*1
+dim(joinSubject)
 
 # Step2. Extracts only the measurements on the mean and standard 
 # deviation for each measurement. 
 features <- read.table("./data/features.txt")
-dim(features)  # 561*2
+dim(features)  
 meanStdIndices <- grep("mean\\(\\)|std\\(\\)", features[, 2])
-length(meanStdIndices) # 66
+length(meanStdIndices) 
 joinData <- joinData[, meanStdIndices]
 dim(joinData) # 10299*66
 names(joinData) <- gsub("\\(\\)", "", features[meanStdIndices, 2]) # remove "()"
@@ -45,13 +45,13 @@ names(joinLabel) <- "activity"
 # names. 
 names(joinSubject) <- "subject"
 cleanedData <- cbind(joinSubject, joinLabel, joinData)
-dim(cleanedData) # 10299*68
-write.table(cleanedData, "merged_data.txt") # write out the 1st dataset
+dim(cleanedData) 
+write.table(cleanedData, "merged_data.txt") 
 
 # Step5. Creates a second, independent tidy data set with the average of 
 # each variable for each activity and each subject. 
-subjectLen <- length(table(joinSubject)) # 30
-activityLen <- dim(activity)[1] # 6
+subjectLen <- length(table(joinSubject)) 
+activityLen <- dim(activity)[1]
 columnLen <- dim(cleanedData)[2]
 result <- matrix(NA, nrow=subjectLen*activityLen, ncol=columnLen) 
 result <- as.data.frame(result)
@@ -68,4 +68,4 @@ for(i in 1:subjectLen) {
     }
 }
 head(result)
-write.table(result, "data_with_means.txt") # write out the 2nd dataset
+write.table(result, "data_with_means.txt")
